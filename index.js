@@ -77,14 +77,25 @@
     
     //creating another prototype function for the question to see if the answer is the same as the prompt answer
     question.prototype.checkAnswer = 
-    function(ans){
+    function(ans, callback){
+        var sc;
         if (ans === this.correct){
             console.log('correct answer!');
+            sc = callback(true) // this is the keepScore
         } else {
             console.log('wrong answer. try again');
+            sc = callback(false);
         }
+        this.displayScore(sc);
     }
     
+    //method to display score in console
+    question.prototype.displayScore = 
+    function(score){
+        console.log('your current score is: ' + score);
+        console.log('-------------------------');
+    }
+
     //creating a new verion of this object and including all inputs questions answers correct
     let q1 = new question('Is javascript the best programming language?', ['yes', 'no'], 0);
     let q2 = new question('how many languages do you know', ['none', 'all'], 0);
@@ -92,6 +103,21 @@
     
     //array of all the questions
     var questions = [q1, q2, q3];
+
+    //creating a function for score that adds 1 everytime the answer is correct
+    // this is a closure, it defines the variable and returns a function.
+    function score(){
+        var sc = 0;
+        return function(correct) {
+            if (correct) {
+                sc++;
+            }
+            return sc;
+        }
+    }
+
+    //sc is always accessible from keepScore function,
+    var keepScore = score();
 
     //this allows us to call this over and over again.
     function nextQuestion() {
@@ -103,17 +129,16 @@
         questions[n].displayQuestion();
         
         //gives the prompt with the question 
-        var answer = (prompt('please select the correct answer'));
+        let answer = prompt('please select the correct answer');
 
         //this makes sure that we are only providing another question when the answer is not exit.
         if (answer !== 'exit') {
             // uses the prototype and enters the answer to compare. this also converts to number to check/
-            questions[n].checkAnswer parseInt(answer);
+            questions[n].checkAnswer(parseInt(answer), keepScore);
 
             nextQuestion();
         }
     }
-
     // this calls the function to be run the first time.
     nextQuestion()
     
