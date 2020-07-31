@@ -1,4 +1,6 @@
-
+/*this outer enclosure ensures that if someone included this in their own code it wouldnt interfere.
+this is called an immediately invoked function and is used for privacy within the section */
+(function() {
 
 //creating an empty function to pull from and create from
 function question(question, answers, correct){
@@ -47,4 +49,8 @@ var answer = parseInt(prompt('please select the correct answer'));
 
 // uses the prototype and enters the answer to compare
 questions[n].checkAnswer(answer);
+
+})();
+
+
 
