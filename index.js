@@ -65,8 +65,7 @@
     }
     
     //need a prototype all the questions can use.
-    question.prototype.displayQuestion = 
-        function(){
+    question.prototype.displayQuestion = function(){
         console.log(this.question);
     
         //loops through answers and prints them to console to choose from.
@@ -76,12 +75,12 @@
     }
     
     //creating another prototype function for the question to see if the answer is the same as the prompt answer
-    question.prototype.checkAnswer = 
-    function(ans, callback){
+    question.prototype.checkAnswer = function(ans, callback){
         var sc;
+
         if (ans === this.correct){
             console.log('correct answer!');
-            sc = callback(true) // this is the keepScore
+            sc = callback(true); // this is the keepScore
         } else {
             console.log('wrong answer. try again');
             sc = callback(false);
@@ -90,8 +89,7 @@
     }
     
     //method to display score in console
-    question.prototype.displayScore = 
-    function(score){
+    question.prototype.displayScore =  function(score){
         console.log('your current score is: ' + score);
         console.log('-------------------------');
     }
